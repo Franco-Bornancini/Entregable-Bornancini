@@ -1,10 +1,10 @@
 import { navbar } from "../layout/navbar.js";
-import { tabla } from "../layout/tablesEmployees.js";
+import { tabla } from "../layout/tablesMateriales.js";
 
 const body = document.getElementById("Body");
 // Titulo
 const h1 = document.createElement("h1");
-h1.textContent = "Empleados";
+h1.textContent = "Materiales";
 h1.className = "title";
 // contenedor principal
 const div = document.createElement("div");

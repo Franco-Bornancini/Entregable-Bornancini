@@ -30,6 +30,113 @@ const editarEmpleado = async (empleadoId, nuevosDatos) => {
     }
 }
 
+
+const crearModalEditarEmpleado = () => {
+    const overlay = document.createElement("div");
+    overlay.className = "modalOverlay";
+
+    const modal = document.createElement("div");
+    modal.className = "materialModal";
+
+    const title = document.createElement("h3");
+    title.textContent = "Editar empleado";
+
+    const form = document.createElement("form");
+    form.className = "modalForm";
+
+    const labelNombre = document.createElement("label");
+    labelNombre.textContent = "Nombre";
+    const inputNombre = document.createElement("input");
+    inputNombre.type = "text";
+    inputNombre.required = true;
+
+    const labelSalario = document.createElement("label");
+    labelSalario.textContent = "Salario";
+    const inputSalario = document.createElement("input");
+    inputSalario.type = "number";
+    inputSalario.required = true;
+    inputSalario.min = "0";
+
+    const actions = document.createElement("div");
+    actions.className = "modalActions";
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.type = "button";
+    cancelBtn.className = "modalCancelButton";
+    cancelBtn.textContent = "Cancelar";
+
+    const saveBtn = document.createElement("button");
+    saveBtn.type = "submit";
+    saveBtn.className = "modalSaveButton";
+    saveBtn.textContent = "Guardar";
+
+    actions.appendChild(cancelBtn);
+    actions.appendChild(saveBtn);
+
+    form.appendChild(labelNombre);
+    form.appendChild(inputNombre);
+    form.appendChild(labelSalario);
+    form.appendChild(inputSalario);
+    form.appendChild(actions);
+
+    modal.appendChild(title);
+    modal.appendChild(form);
+    overlay.appendChild(modal);
+
+    document.body.appendChild(overlay);
+
+    const closeModal = () => {
+        document.body.removeChild(overlay);
+    };
+
+    cancelBtn.addEventListener("click", closeModal);
+
+    overlay.addEventListener("click", (event) => {
+        if (event.target === overlay) {
+            closeModal();
+        }
+    });
+
+    return {
+        inputNombre,
+        inputSalario,
+        form,
+        closeModal
+    };
+};
+
+const abrirModalEditarEmpleado = (empleado) => {
+    const { inputNombre, inputSalario, form, closeModal } = crearModalEditarEmpleado();
+
+    inputNombre.value = empleado.name ?? "";
+    inputSalario.value = empleado.salary ?? 0;
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const salario = parseInt(inputSalario.value, 10);
+
+        if (Number.isNaN(salario)) {
+            alert("Salario debe ser un número válido");
+            return;
+        }
+
+        try {
+            await editarEmpleado(empleado.id, {
+                name: inputNombre.value.trim(),
+                salary: salario
+            });
+
+            closeModal();
+            alert(`Empleado ${empleado.name} actualizado`);
+            location.reload();
+        } catch (error) {
+            console.error("No se pudo guardar el empleado:", error);
+            alert("No se pudo guardar el empleado");
+        }
+    });
+};
+
 const handleTraerEmpleados = async () => {
     try {
         console.log("Lista de empleados:", empleadosList);
@@ -54,17 +161,11 @@ const handleTraerEmpleados = async () => {
                 deleteBtn.addEventListener("click", async () => {
                     await eliminarEmpleado(empleado.id);
                     alert(`Empleado ${empleado.name} eliminado`);
-                    // Recargar la página para ver los cambios
                     location.reload();
                 });
 
                 editBtn.addEventListener("click", () => {
-                    const nuevoSalario = prompt(`Editar salario de ${empleado.name}:`, empleado.salary);
-                    if (nuevoSalario !== null) {
-                        editarEmpleado(empleado.id, { salary: parseInt(nuevoSalario) });
-                        alert(`Salario de ${empleado.name} actualizado`);
-                        location.reload();
-                    }
+                    abrirModalEditarEmpleado(empleado);
                 });
                 
                 cell3.appendChild(deleteBtn);

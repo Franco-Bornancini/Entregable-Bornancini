@@ -19,5 +19,19 @@ a2.href = "./empleados.html";
 a2.textContent = "Empleados";
 li2.appendChild(a2);
 ul.appendChild(li2);
+//Materiales
+const li3 = document.createElement("li");
+const a3 = document.createElement("a");
+a3.href = "./materiales.html";
+a3.textContent = "Materiales";
+li3.appendChild(a3);
+ul.appendChild(li3);
+// Salidas
+const li4 = document.createElement("li");
+const a4 = document.createElement("a");
+a4.href = "./salidas.html";
+a4.textContent = "Salidas";
+li4.appendChild(a4);
+ul.appendChild(li4);
 
 export { navbar };

@@ -1,4 +1,4 @@
-import { tabla } from "../layout/tables.js";
+// import { tabla } from "../layout/tables.js";
 import { navbar } from "../layout/navbar.js";
 
 // Creo los elementos del dom
@@ -31,7 +31,7 @@ divTabla.className = "divTabla";
 body.appendChild(navbar);
 body.appendChild(div);
 div.appendChild(divTabla);
-divTabla.appendChild(tabla);
+// divTabla.appendChild(tabla);
 
 
 // funciones
