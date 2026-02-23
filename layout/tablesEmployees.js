@@ -10,6 +10,8 @@ const empleadosList = empleadosSnapshot.docs.map(docSnapshot => ({
     ...docSnapshot.data()
 }));
 
+localStorage.setItem("empleados", JSON.stringify(empleadosList));
+
 const eliminarEmpleado = async (empleadoId) => {
     try {
         const docRef = doc(db, "employees", empleadoId);

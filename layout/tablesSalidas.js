@@ -17,9 +17,9 @@ const handleTraerSalidas = async () => {
             salidasList.forEach(salida => {
                 const row = tabla.insertRow();
                 const cell1 = row.insertCell();
-                cell1.textContent = salida.name;
+                cell1.textContent = salida.material;
                 const cell2 = row.insertCell();
-                cell2.textContent = salida.price;
+                cell2.textContent = salida.precio;
                 const cell3 = row.insertCell();
                 cell3.textContent = salida.cantidad;
                 const cell4 = row.insertCell();

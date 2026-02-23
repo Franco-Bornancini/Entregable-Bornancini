@@ -10,6 +10,8 @@ const materialesList = materialesSnapshot.docs.map(docSnapshot => ({
     ...docSnapshot.data()
 }));
 
+localStorage.setItem("materiales", JSON.stringify(materialesList));
+
 const eliminarMaterial = async (materialId) => {
     try {
         const docRef = doc(db, "materials", materialId);
